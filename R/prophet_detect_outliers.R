@@ -22,20 +22,7 @@ prophet_detect_outliers <- function(model, p_limit = 0.05, recursive = TRUE) {
   df <- data.frame(ds = Sys.Date()[-1], y = double(), resid = double(), p_values = double())
   while(TRUE) {
     data_hist <- data_hist[!(data_hist$ds %in% df$ds), ]
-    m <- prophet(
-      fit = FALSE,
-      growth = model$growth,
-      changepoints = model$changepoints,
-      n.changepoints = model$n.changepoints,
-      yearly.seasonality = model$yearly.seasonality,
-      weekly.seasonality = model$weekly.seasonality,
-      daily.seasonality = model$daily.seasonality,
-      holidays = model$holidays,
-      seasonality.prior.scale = model$seasonality.prior.scale,
-      holidays.prior.scale = model$holidays.prior.scale,
-      changepoint.prior.scale = model$changepoint.prior.scale,
-      mcmc.samples = 0,
-      interval.width = model$interval.width)
+    m <- do.call(prophet, args = model)
 
     exreg_names <- names(model$extra_regressors)
     for (i in seq_along(model$extra_regressors)) {
