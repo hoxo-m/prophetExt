@@ -13,11 +13,7 @@
 #' outliers <- prophet_detect_outliers(m)
 #' plot(m, fcst) + autolayer(outliers)
 #' }
-#'
-#' @export
-autolayer <- function(object, ...) {
-  UseMethod("autolayer")
-}
+NULL
 
 #' @import ggplot2
 #' @export

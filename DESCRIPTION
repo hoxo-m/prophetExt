@@ -1,7 +1,7 @@
 Package: prophetExt
 Type: Package
 Title: Extension for Facebook Prophet
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R:
     person("Koji", "Makiyama", , "hoxo.smile@gmail.com", c("aut", "cre"))
 Description: Extension for Facebook prophet package.
@@ -11,7 +11,7 @@ Depends:
   R (>= 3.2.3)
 Imports:
   dplyr (>= 0.5.0),
-  ggplot2,
+  ggplot2 (>= 3.0.0),
   lubridate,
   outliers,
   prophet (>= 0.2.0)
