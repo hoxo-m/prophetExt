@@ -10,19 +10,17 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   # out.width = "100%",
-  fig.width = 5,
+  fig.width = 6,
   fig.height = 4,
   message = FALSE
 )
 Sys.setlocale("LC_TIME", "C")
 ```
 
-# prophetExt: An Extension for Prophet Time-Series Forecasting
+# prophetExt: Additional Features for Prophet Time-Series Forecasting
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-The goal of prophetExt is to ...
 
 ## Installation
 
@@ -37,7 +35,7 @@ remotes::install_github("hoxo-m/prophetExt")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-df <- read.csv("https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_R_outliers2.csv")
+df <- read.csv("https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_R_outliers2.csv", skip = 337, col.names = c("ds", "y"))
 head(df)
 ```
 
@@ -64,11 +62,10 @@ calendar_plot(outliers)
 ```
 
 ```{r}
-library(dplyr)
+df$y[df$ds %in% outliers$ds] <- NA
 
-df_without_outliers <- df |> filter(!ds %in% outliers$ds)
-
-model <- prophet(df_without_outliers)
+model <- prophet(df)
+df_future <- make_future_dataframe(model, 365)
 fore <- predict(model, df_future)
 
 plot(model, fore)

@@ -1,13 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# prophetExt: An Extension for Prophet Time-Series Forecasting
+# prophetExt: Additional Features for Prophet Time-Series Forecasting
 
 <!-- badges: start -->
 
 <!-- badges: end -->
-
-The goal of prophetExt is to …
 
 ## Installation
 
@@ -22,15 +20,15 @@ remotes::install_github("hoxo-m/prophetExt")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-df <- read.csv("https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_R_outliers2.csv")
+df <- read.csv("https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_R_outliers2.csv", skip = 337, col.names = c("ds", "y"))
 head(df)
 #>           ds        y
-#> 1 2008-01-30 5.976351
-#> 2 2008-01-16 6.049733
-#> 3 2008-01-17 6.011267
-#> 4 2008-01-14 5.953243
-#> 5 2008-01-15 5.910797
-#> 6 2008-01-12 5.407172
+#> 1 2009-01-29 6.775366
+#> 2 2009-01-19 6.799056
+#> 3 2009-01-18 6.270988
+#> 4 2009-01-13 7.197435
+#> 5 2009-01-12 7.270313
+#> 6 2009-01-11 6.710523
 ```
 
 ``` r
@@ -62,11 +60,10 @@ calendar_plot(outliers)
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
-library(dplyr)
+df$y[df$ds %in% outliers$ds] <- NA
 
-df_without_outliers <- df |> filter(!ds %in% outliers$ds)
-
-model <- prophet(df_without_outliers)
+model <- prophet(df)
+df_future <- make_future_dataframe(model, 365)
 fore <- predict(model, df_future)
 
 plot(model, fore)

@@ -1,6 +1,6 @@
 Type: Package
 Package: prophetExt
-Title: An Extension for Prophet Time-Series Forecasting
+Title: Additional Features for Prophet Time-Series Forecasting
 Version: 0.0.0.9000
 Authors@R: c(
     person("Koji", "Makiyama", , "hoxo.smile@gmail.com", role = c("aut", "cre", "cph")),
