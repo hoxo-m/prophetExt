@@ -54,7 +54,7 @@ plot(model, fore) + autolayer(outliers)
 ![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
-calendar_plot(outliers)
+plot_residuals_calendar(outliers)
 ```
 
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->

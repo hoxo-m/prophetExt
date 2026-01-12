@@ -58,7 +58,7 @@ plot(model, fore) + autolayer(outliers)
 ```
 
 ```{r, fig.width=10, fig.height=7.5}
-calendar_plot(outliers)
+plot_residuals_calendar(outliers)
 ```
 
 ```{r}

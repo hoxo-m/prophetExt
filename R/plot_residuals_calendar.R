@@ -4,11 +4,11 @@
 #' @param ... Other arguments.
 #'
 #' @export
-calendar_plot <- function(
-    object, begin = NULL, end = NULL, drop_empty = TRUE, plot_na,
+plot_residuals_calendar <- function(
+    object, begin = NULL, end = NULL, drop_empty = TRUE, show_na,
     colors = c(low = "red", mid = "white", high = "blue", na = "lightgrey"),
     week_start = 7, guide = ggplot2::guide_colorbar("Residual")) {
-  UseMethod("calendar_plot")
+  UseMethod("plot_residuals_calendar")
 }
 
 #' Calendar plot for residuals of prophet model
@@ -21,8 +21,8 @@ calendar_plot <- function(
 #' @importFrom dplyr mutate select left_join
 #'
 #' @export
-calendar_plot.prophet <- function(
-    object, begin = NULL, end = NULL, drop_empty = TRUE, plot_na = FALSE,
+plot_residuals_calendar.prophet <- function(
+    object, begin = NULL, end = NULL, drop_empty = TRUE, show_na = FALSE,
     colors = c(low = "red", mid = "white", high = "blue", na = "lightgrey"),
     week_start = 7, guide = ggplot2::guide_colorbar("Residual")) {
 
@@ -35,7 +35,7 @@ calendar_plot.prophet <- function(
     mutate(ds = as.Date(.data$ds), resid = .data$y - .data$yhat) |>
     select(ds = .data$ds, y = .data$y, resid = .data$resid)
 
-  if (plot_na) {
+  if (show_na) {
     na_dates <- pick_na_dates(model)
   } else {
     na_dates <- NULL
@@ -52,12 +52,12 @@ calendar_plot.prophet <- function(
 #' @param begin date or character value.
 #'
 #' @export
-calendar_plot.prophet_outlier <- function(
-    object, begin = NULL, end = NULL, drop_empty = TRUE, plot_na = TRUE,
+plot_residuals_calendar.prophet_outlier <- function(
+    object, begin = NULL, end = NULL, drop_empty = TRUE, show_na = TRUE,
     colors = c(low = "red", mid = "white", high = "blue", na = "lightgrey"),
     week_start = 7, guide = ggplot2::guide_colorbar("Residual")) {
 
-  if (plot_na) {
+  if (show_na) {
     na_dates <- attr(object, "na_dates")
   } else {
     na_dates <- NULL
