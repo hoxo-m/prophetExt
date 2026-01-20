@@ -7,8 +7,13 @@ ggplot2::autolayer
 #'
 #' @export
 autolayer.prophet_outlier <- function(object, ...) {
+  if (nrow(object) == 0L) {
+    warning("no outliers")
+    return(NULL)
+  }
+
   colour <- "red"
-  dots <- list(...)
+  dots <- rlang::dots_list(...)
   if ("col" %in% names(dots)) {
     colour <- dots$col
     dots$col <- NULL

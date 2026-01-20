@@ -55,6 +55,7 @@ detect_outliers <- memoise::memoise(function(model, p_limit = 0.05) {
   }
 
   structure(df_outliers,
+            names = c("ds", "y", "resid", "p_value"),
             class = c("prophet_outlier", "tbl_df", "tbl", "data.frame"),
             na_dates = pick_na_dates(model))
 })
