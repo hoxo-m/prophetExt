@@ -1,7 +1,7 @@
 #' Detect Outliers
 #'
 #' @export
-detect_outliers <- function(model, p_limit = 0.05) {
+detect_outliers <- memoise::memoise(function(model, p_limit = 0.05) {
   data <- model$history
   model$uncertainty.samples <- 0  # to speed up predict()
 
@@ -57,60 +57,4 @@ detect_outliers <- function(model, p_limit = 0.05) {
   structure(df_outliers,
             class = c("prophet_outlier", "tbl_df", "tbl", "data.frame"),
             na_dates = pick_na_dates(model))
-}
-
-#' #' @export
-#' detect_outliers_one <- function(model, prob_limit = 0.05, data = NULL) {
-#'   if (is.null(data)) {
-#'     data <- model$history
-#'   }
-#'
-#'   model$interval.width <- 1 - prob_limit
-#'   fore <- predict(model, data)
-#'
-#'   ind <- data$y < fore$yhat_lower | fore$yhat_upper < data$y
-#'   data_outliers <- data[ind, , drop = FALSE]
-#'   fore_outliers <- fore[ind, , drop = FALSE]
-#'   residuals <- data_outliers$y - fore_outliers$yhat
-#'
-#'   df_outliers <- data.frame(
-#'     ds = data_outliers$ds,
-#'     y = data_outliers$y,
-#'     resid = residuals
-#'   )
-#'
-#'   structure(df_outliers, class = c("prophet_outlier", "tbl_df", "tbl", "data.frame"))
-#' }
-
-# detect_outliers2 <- function(model, prob_limit = 0.05) {
-#   data <- model$history
-#
-#   m <- do.call(prophet, args = model)
-#   m <- suppressMessages(fit.prophet(m, data))
-#   df_outliers <- detect_outliers_one(m, prob_limit = prob_limit, data = data)
-#   fore <- predict(m, data)
-#   g <- plot(m, fore) + autolayer(df_outliers)
-#   print(g)
-#
-#   while (TRUE) {
-#     df_outliers_last <- df_outliers
-#     data_without_outliers <- data |> filter(!ds %in% df_outliers$ds)
-#     m <- do.call(prophet, args = model)
-#     m$changepoints <- NULL
-#     m <- suppressMessages(fit.prophet(m, data_without_outliers))
-#
-#     set.seed(314)
-#     df_outliers <- detect_outliers_one(m, prob_limit = prob_limit, data = data)
-#
-#     fore <- predict(m, data)
-#     g <- plot(m, fore) + autolayer(df_outliers)
-#     print(g)
-#
-#     diff <- setdiff(df_outliers_last$ds, df_outliers$ds)
-#
-#     print(length(diff))
-#     if (length(diff) == 0) break
-#   }
-#
-#   structure(df_outliers, class = c("prophet_outlier", "tbl_df", "tbl", "data.frame"))
-# }
+})
