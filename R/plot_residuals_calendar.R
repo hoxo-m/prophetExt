@@ -14,7 +14,6 @@ plot_residuals_calendar <- function(
 #' Calendar plot for residuals of prophet model
 #'
 #' @param object prophet model.
-#' @param fcst data.frame.
 #' @param begin date or character value.
 #'
 #' @importFrom rlang .data
@@ -28,7 +27,7 @@ plot_residuals_calendar.prophet <- function(
 
   model <- object
   data <- model$history
-  model$uncertainty.samples <- 0L
+  model$uncertainty.samples <- 0L  # to speed up predict()
   fore <- stats::predict(model, data)
   df_resid <- fore |>
     left_join(data, by = "ds") |>

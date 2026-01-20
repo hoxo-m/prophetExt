@@ -1,7 +1,5 @@
 #' Detect Outliers
-#'
-#' @export
-detect_outliers <- memoise::memoise(function(model, p_limit = 0.05) {
+detect_outliers_impl <- function(model, p_limit = 0.05) {
   data <- model$history
   model$uncertainty.samples <- 0  # to speed up predict()
 
@@ -58,4 +56,11 @@ detect_outliers <- memoise::memoise(function(model, p_limit = 0.05) {
             names = c("ds", "y", "resid", "p_value"),
             class = c("prophet_outlier", "tbl_df", "tbl", "data.frame"),
             na_dates = pick_na_dates(model))
-})
+}
+
+#' Detect Outliers
+#'
+#' @param model model
+#'
+#' @export
+detect_outliers <- memoise::memoise(detect_outliers_impl)

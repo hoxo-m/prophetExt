@@ -19,8 +19,6 @@
 \item{object}{prophet model.}
 
 \item{begin}{date or character value.}
-
-\item{fcst}{data.frame.}
 }
 \description{
 Calendar plot for residuals of prophet model
