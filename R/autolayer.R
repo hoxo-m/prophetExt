@@ -7,21 +7,20 @@ ggplot2::autolayer
 #'
 #' @export
 autolayer.prophet_outlier <- function(object, ...) {
+  colour <- "red"
   dots <- list(...)
+  if ("col" %in% names(dots)) {
+    colour <- dots$col
+    dots$col <- NULL
+  }
+  if ("color" %in% names(dots)) {
+    colour <- dots$color
+    dots$color <- NULL
+  }
   if ("colour" %in% names(dots)) {
     colour <- dots$colour
     dots$colour <- NULL
-  } else if ("color" %in% names(dots)) {
-    colour <- dots$color
-    dots$color <- NULL
-  } else if ("col" %in% names(dots)) {
-    colour <- dots$col
-    dots$col <- NULL
-  } else {
-    colour <- "red"
   }
-  list(
-    geom_point(aes(.data$ds, .data$y), data = object, stat = "identity",
-               position = "identity", !!!dots, colour = colour)
-  )
+  geom_point(aes(.data$ds, .data$y), data = object, stat = "identity",
+             position = "identity", !!!dots, colour = colour)
 }
