@@ -81,7 +81,7 @@ add_trend_to_plot <- function(model, color = "red", ...) {
 #' @export
 add_outliers_to_plot <- function(model, p_limit = 0.05, ...) {
   if (!memoise::has_cache(detect_outliers)(model, p_limit)) {
-    if (interactive()) message("Detecting outliers...")
+    if (interactive()) message("Detecting outliers. Please wait...")
   }
   outliers <- detect_outliers(model, p_limit = p_limit)
   autolayer.prophet_outlier(outliers, ...)
