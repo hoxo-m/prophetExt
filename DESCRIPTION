@@ -16,7 +16,7 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     dplyr,
-    ggplot2 (>= 3.0.0),
+    ggplot2 (>= 4.0.0),
     lubridate,
     outliers,
     prophet (>= 1.0),
