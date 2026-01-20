@@ -80,6 +80,7 @@ add_outliers_to_plot <- function(model, p_limit = 0.05, color = "red", ...) {
   if (!memoise::has_cache(detect_outliers)(model, p_limit)) {
     if (interactive()) message("Detecting outliers. Please wait...")
   }
+  dots <- rlang::dots_list(...)
   outliers <- detect_outliers(model, p_limit = p_limit)
-  autolayer.prophet_outlier(outliers, color, ...)
+  autolayer.prophet_outlier(outliers, !!!dots, color = color)
 }

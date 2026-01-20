@@ -3,7 +3,8 @@ detect_outliers_impl <- function(model, p_limit = 0.05) {
   data <- model$history
   model$uncertainty.samples <- 0  # to speed up predict()
 
-  df_outliers <- data.frame()
+  col_names <- c("ds", "y", "resid", "p_value")
+  df_outliers <- create_empty_df(col_names, col_types = "Tddd")
   ind <- NULL
   pb_value <- 0
   pb_max <- p_limit
@@ -53,9 +54,30 @@ detect_outliers_impl <- function(model, p_limit = 0.05) {
   }
 
   structure(df_outliers,
-            names = c("ds", "y", "resid", "p_value"),
             class = c("prophet_outlier", "tbl_df", "tbl", "data.frame"),
             na_dates = pick_na_dates(model))
+}
+
+create_empty_df <- function(col_names, col_types){
+  col_types <- strsplit(col_types, split = "")[[1]]
+  result <- list()
+  for (i in seq_along(col_types)) {
+    col_type <- col_types[1]
+    result[[i]] <- switch(col_type,
+                          "c" = character(0L),
+                          "D" = lubridate::Date(0L),
+                          "T" = lubridate::POSIXct(0L),
+                          "d" = double(0L),
+                          "f" = factor(),
+                          "i" = integer(0L),
+                          "l" = logical(0L),
+                          "n" = numeric(0L),
+                          "t" = structure(double(0L), class = c("hms", "difftime"))
+    )
+  }
+  names(result) <- col_names
+  empty_df <- data.frame(result)
+  empty_df
 }
 
 #' Detect Outliers

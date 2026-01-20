@@ -7,10 +7,10 @@ get_changepoints <- function(model, threshold = 0.01) {
   df <- data.frame(ds = changepoints,
                    growth_rate = growth_rate,
                    delta = delta)
+
   if (!"daily" %in% names(model$seasonalities)) {
     df$ds <- as.Date(df$ds)
   }
-  structure(df,
-            names = c("ds", "growth_rate", "delta"),
-            class = c("prophet_changepoint", "tbl_df", "tbl", "data.frame"))
+
+  structure(df, class = c("prophet_changepoint", "tbl_df", "tbl", "data.frame"))
 }
