@@ -41,7 +41,7 @@ fore <- predict(model, df_future)
 plot(model, fore)
 ```
 
-![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-1-1.png" alt="" width="600" />
 
 ``` r
 library(prophetExt)
@@ -51,13 +51,13 @@ outliers <- detect_outliers(model)
 plot(model, fore) + autolayer(outliers)
 ```
 
-![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-2-1.png" alt="" width="600" />
 
 ``` r
 plot_residuals_calendar(outliers)
 ```
 
-![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-3-1.png" alt="" width="1000" />
 
 ``` r
 df$y[df$ds %in% outliers$ds] <- NA
@@ -69,4 +69,4 @@ fore <- predict(model, df_future)
 plot(model, fore)
 ```
 
-![](man/figures/README-unnamed-chunk-5-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-4-1.png" alt="" width="600" />

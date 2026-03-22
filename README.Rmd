@@ -4,14 +4,15 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  # out.width = "100%",
+  dpi = 192,
   fig.width = 6,
   fig.height = 4,
+  out.width = 600,
   message = FALSE
 )
 Sys.setlocale("LC_TIME", "C")
@@ -57,7 +58,7 @@ outliers <- detect_outliers(model)
 plot(model, fore) + autolayer(outliers)
 ```
 
-```{r, fig.width=10, fig.height=7.5}
+```{r, fig.width=10, fig.height=7.5, out.width=1000}
 plot_residuals_calendar(outliers)
 ```
 
